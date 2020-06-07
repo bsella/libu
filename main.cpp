@@ -3,6 +3,16 @@
 
 u::Font f("../Lato-Regular.ttf", 20);
 
+class TestWidget : public u::Widget{
+	void draw()override{
+		setColor(0,0,255,255);
+		clear();
+		setColor(255,255,0,255);
+		line(0,0, 20,20);
+	}
+public:
+	TestWidget():u::Widget(40,30){}
+};
 class TestWindow : public u::Window{
 	bool in;
 	void draw()override{
@@ -33,6 +43,8 @@ public:
 
 int main(){
 	TestWindow window;
+	TestWidget widget;
+	window.addWidget(&widget, 50,150);
 
 	while(!window.closing){
 		window.handle();

@@ -44,21 +44,21 @@ namespace u{
 		SDL_RenderFillRect(_renderer, reinterpret_cast<const SDL_Rect*>(&_rect));
 	}
 	void Widget::dot(int x, int y)const{
-		SDL_RenderDrawPoint(_renderer, x, y);
+		SDL_RenderDrawPoint(_renderer, _rect.x+x, _rect.y+y);
 	}
 	void Widget::line(int x1, int y1, int x2, int y2)const{
-		SDL_RenderDrawLine(_renderer, x1, y1, x2, y2);
+		SDL_RenderDrawLine(_renderer, _rect.x+x1, _rect.y+y1, _rect.x+x2, _rect.y+y2);
 	}
 	void Widget::rect(int x, int y, int w, int h)const{
-		r= {x,y,w,h};
+		r= {_rect.x+x,_rect.y+y,w,h};
 		SDL_RenderDrawRect(_renderer, reinterpret_cast<const SDL_Rect*>(&r));
 	}
 	void Widget::frect(int x, int y, int w, int h)const{
-		r= {x,y,w,h};
+		r= {_rect.x+x,_rect.y+y,w,h};
 		SDL_RenderFillRect(_renderer, reinterpret_cast<const SDL_Rect*>(&r));
 	}
 	void Widget::text(Text* text, int x, int y){
-		text->draw(_renderer, x, y);
+		text->draw(_renderer, _rect.x+x, _rect.y+y);
 	}
 	void Widget::draw(){}
 	void Widget::redraw(){
