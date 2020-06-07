@@ -4,6 +4,8 @@ class SDL_Surface;
 class SDL_Renderer;
 
 namespace u{
+	class Text;
+
 	class Widget{
 	public:
 		Widget(unsigned int w, unsigned int h, int x=0, int y=0);
@@ -18,6 +20,7 @@ namespace u{
 		void rect(int x, int y, int w, int h)const;
 		void frect(int x, int y, int w, int h)const;
 		void dot(int x, int y)const;
+		void text(Text*, int x, int y);
 
 	protected:
 		struct{
@@ -27,7 +30,7 @@ namespace u{
 		SDL_Renderer* _renderer;
 		static unsigned int mouseMask;
 		bool valid=false;
-		virtual void draw()const;
+		virtual void draw();
 		void redraw();
 
 		virtual void onMouseEnter(int x, int y);

@@ -5,6 +5,11 @@ class SDL_Window;
 
 namespace u{
 	class Window: public Widget{
+
+		//virtual void onResize();
+		virtual void onClose();
+		static unsigned int instanceCount;
+
 	public:
 		Window(const char*, unsigned int w, unsigned int h);
 		virtual ~Window()override;
@@ -16,12 +21,5 @@ namespace u{
 	protected:
 		SDL_Window* window=nullptr;
 
-		bool in;
-	private:
-		virtual void onClose();
-		//virtual void onResize();
-		void onMouseEnter(int,int)override;
-		void onMouseLeave()override;
-		void draw()const override;
 	};
 }

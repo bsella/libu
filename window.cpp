@@ -2,39 +2,27 @@
 #include <SDL2/SDL.h>
 
 namespace u{
+	unsigned int Window::instanceCount=0;
 	Window::Window(const char* title, unsigned int w, unsigned int h): Widget(w,h){
-		SDL_Init(SDL_INIT_VIDEO);
+		if(instanceCount==0){
+			SDL_Init(SDL_INIT_VIDEO);
+		}
 		if(!window)
 			window= SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, w, h, SDL_WINDOW_SHOWN);
 		_renderer= SDL_CreateRenderer(window, -1, 0);
+		instanceCount++;
 	}
-	//Window::Window():Window("", 640, 400){}
 	Window::~Window(){
 		SDL_DestroyWindow(window);
+		SDL_DestroyRenderer(_renderer);
+		instanceCount--;
+		if(instanceCount==0){
+			SDL_Quit();
+		}
 	}
 
-	void Window::onMouseEnter(int, int){
-		in=true;
-		invalidate();
-	}
-	void Window::onMouseLeave(){
-		in=false;
-		invalidate();
-	}
 	void Window::present()const{
 		SDL_RenderPresent(_renderer);
-	}
-	void Window::draw()const{
-		if(in)
-			setColor(255,0,0,255);
-		else
-			setColor(0,255,0,255);
-		clear();
-		setColor(0,0,255,255);
-		line(0,_rect.h,_rect.w,0);
-		line(0,0,_rect.w,_rect.h);
-		setColor(255,255, 0,255);
-		dot(100, 200);
 	}
 	
 	void Window::handle(){
@@ -42,7 +30,7 @@ namespace u{
 			redraw();
 			present();
 		}
-        SDL_Event event;
+        static SDL_Event event;
 		static int x, y;
         while( SDL_PollEvent( &event ) ){
             switch( event.type ){

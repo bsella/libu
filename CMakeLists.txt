@@ -7,8 +7,9 @@ set(CMAKE_FLAGS "--no-print-directory")
 add_library(libu
 	widget.cpp
 	window.cpp
+	text.cpp
 	)
-target_link_libraries(libu -lSDL2)
+target_link_libraries(libu -lSDL2 -lSDL2_ttf)
 target_include_directories(libu PUBLIC include)
 
 ##########################################################

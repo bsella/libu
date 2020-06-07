@@ -1,5 +1,6 @@
 #include "widget.h"
 #include <SDL2/SDL.h>
+#include "text.h"
 
 namespace u{
 	Widget::Widget(unsigned int w, unsigned int h, int x, int y){
@@ -56,7 +57,10 @@ namespace u{
 		r= {x,y,w,h};
 		SDL_RenderFillRect(_renderer, reinterpret_cast<const SDL_Rect*>(&r));
 	}
-	void Widget::draw()const{}
+	void Widget::text(Text* text, int x, int y){
+		text->draw(_renderer, x, y);
+	}
+	void Widget::draw(){}
 	void Widget::redraw(){
 		if(valid) return;
 		draw();
